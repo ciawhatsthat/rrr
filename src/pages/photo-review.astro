@@ -1,0 +1,364 @@
+---
+/**
+ * Private photo review page for Andrew.
+ * Not linked from the site, noindex, excluded from the sitemap and blocked in robots.txt.
+ * Photos live in /public/review/NN.jpg (web-sized copies of the old Webador site photos).
+ */
+import Layout from '@components/Layout.astro';
+import photos from '@data/review-photos.json';
+import { site } from '@data/site';
+
+// Where Andrew's answers get emailed. Leave blank to open a mail draft with no recipient.
+const REPLY_TO = '';
+
+const groups = [...new Set(photos.map((p) => p.group))].map((name) => ({
+  name,
+  photos: photos.filter((p) => p.group === name)
+}));
+
+// The shots the new site needs. One row per distinct photo; slots that reuse the same
+// photo (service card + service hero, etc.) are collapsed into one row.
+const needs = [
+  {
+    section: 'Home page',
+    items: [
+      { id: 'home-hero', label: 'Home page hero', want: 'Your single best finished floor. Bright room, wide view, nothing on the floor. This is the first thing people see.' },
+      { id: 'about', label: 'About photo', want: 'You (or the crew) on a job. Installing, measuring, whatever — a real work photo, not posed.' },
+      { id: 'contact', label: 'Contact page photo', want: 'A finished room or a jobsite shot. Can repeat another pick.' }
+    ]
+  },
+  {
+    section: 'Bathroom subfloor project (featured on home page)',
+    items: [
+      { id: 'bath-before', label: 'Bathroom — before / rotten subfloor', want: 'The rot. Probably #2 or #3.' },
+      { id: 'bath-after', label: 'Bathroom — after', want: 'New LVP with toilet reset. Probably #4.' }
+    ]
+  },
+  {
+    section: 'Hardwood',
+    items: [
+      { id: 'hw-main', label: 'Hardwood — main photo', want: 'Finished hardwood room, wide.' },
+      { id: 'hw-detail', label: 'Hardwood — close-up', want: 'Plank layout, a transition, or trim detail.' },
+      { id: 'hw-eng', label: 'Engineered hardwood — finished room', want: 'Any finished engineered install.' },
+      { id: 'hw-trim', label: 'Hardwood — base trim / edge', want: 'Where floor meets base or a doorway.' }
+    ]
+  },
+  {
+    section: 'Luxury vinyl plank (LVP)',
+    items: [
+      { id: 'lvp-main', label: 'LVP — main photo', want: 'Finished LVP room, wide.' },
+      { id: 'lvp-kitchen', label: 'LVP — kitchen', want: 'Kitchen install.' },
+      { id: 'lvp-basement', label: 'LVP — basement or over concrete', want: 'Basement or slab install.' },
+      { id: 'lvp-transition', label: 'LVP — doorway / transition detail', want: 'Close-up where LVP meets tile, carpet, or a threshold.' }
+    ]
+  },
+  {
+    section: 'Tile',
+    items: [
+      { id: 'tile-main', label: 'Tile — main photo', want: 'Finished tile floor, wide.' },
+      { id: 'tile-bath', label: 'Tile — bathroom', want: 'Bathroom tile floor.' },
+      { id: 'tile-entry', label: 'Tile — entry or laundry / utility', want: 'Entryway, mudroom, or laundry.' },
+      { id: 'tile-detail', label: 'Tile — grout / edge detail', want: 'Close-up of grout lines or an edge.' }
+    ]
+  },
+  {
+    section: 'Carpet',
+    items: [
+      { id: 'carpet-main', label: 'Carpet — finished bedroom or family room', want: 'We have NO finished carpet room photos. If you have one on your phone, we need it.' },
+      { id: 'carpet-basement', label: 'Carpet — basement room', want: 'Any finished carpeted basement.' },
+      { id: 'carpet-stairs', label: 'Carpet — stairs', want: 'Carpeted stairs, finished.' },
+      { id: 'carpet-detail', label: 'Carpet — edge / transition detail', want: 'Where carpet meets hard floor.' }
+    ]
+  },
+  {
+    section: 'Stairs',
+    items: [
+      { id: 'stairs-main', label: 'Stairs — main photo', want: 'Finished stair run, hardwood or LVP.' },
+      { id: 'stairs-nosing', label: 'Stairs — tread / nosing close-up', want: 'Close-up of a tread edge.' },
+      { id: 'stairs-landing', label: 'Stairs — landing meets hallway', want: 'Top or bottom of stairs where it ties into the floor.' },
+      { id: 'stairs-lvp', label: 'Stairs — LVP stairs', want: 'LVP treads and risers.' }
+    ]
+  },
+  {
+    section: 'Portfolio extras',
+    items: [
+      { id: 'weight-before', label: 'Weight room — before', want: 'Bare concrete. Probably #5.' },
+      { id: 'weight-after', label: 'Weight room — rubber floor after', want: 'Probably #6 or #7.' },
+      { id: 'tearout', label: 'Tear-out / prep in progress', want: 'Old floor coming up, or bare subfloor before install.' },
+      { id: 'sheet-vinyl', label: 'Sheet vinyl — finished', want: 'Any sheet vinyl job, if you have one.' },
+      { id: 'laminate', label: 'Laminate — finished room', want: 'Any laminate job.' }
+    ]
+  },
+  {
+    section: 'By town (for the city pages)',
+    items: [
+      { id: 'city-berthoud', label: 'Berthoud job', want: 'Any photo(s) from a Berthoud house.' },
+      { id: 'city-longmont', label: 'Longmont job', want: 'Any photo(s) from a Longmont house.' },
+      { id: 'city-loveland', label: 'Loveland job', want: 'Any photo(s) from a Loveland house.' },
+      { id: 'city-boulder', label: 'Boulder job', want: 'Any photo(s) from a Boulder house.' },
+      { id: 'city-fortcollins', label: 'Fort Collins job', want: 'Any photo(s) from a Fort Collins house.' }
+    ]
+  }
+];
+
+const totalNeeds = needs.reduce((n, s) => n + s.items.length, 0);
+---
+
+<Layout
+  title="Photo Review — Red Rock Remodeling"
+  description="Private photo review page for the Red Rock Remodeling website rebuild."
+  canonicalPath="/photo-review/"
+  noindex
+>
+  <section class="section section--white">
+    <div class="container narrow">
+      <p class="eyebrow">For Andrew</p>
+      <h1>Pick the photos for the new site</h1>
+      <p class="lead">
+        Below are all {photos.length} photos pulled off the old website, numbered. Under them is a list of
+        {totalNeeds} shots the new site needs. For each one, type in the photo number that fits best.
+        Leave it blank if nothing fits — that becomes the list of new photos to take.
+      </p>
+      <ol class="how">
+        <li>Scroll through the photos. Tap any photo to see it bigger.</li>
+        <li>In the list at the bottom, type the photo number(s) next to each shot. One photo can be used for more than one shot.</li>
+        <li>If you remember which town a job was in, put it in the notes.</li>
+        <li>Hit <strong>Send my picks</strong> at the bottom. Your answers save in this browser as you go, so you can come back later.</li>
+      </ol>
+      <p><a class="button-secondary" href="#picks">Jump to the list</a></p>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="photos">
+    <div class="container">
+      <p class="eyebrow">The photos</p>
+      <h2>All {photos.length} photos, numbered</h2>
+      <p class="lead">Grouped by what I think they are — correct me in the notes if I've got one wrong.</p>
+      {
+        groups.map((group) => (
+          <div class="group">
+            <h3>{group.name}</h3>
+            <div class="photo-grid">
+              {group.photos.map((p) => (
+                <button type="button" class="photo" data-n={p.n} data-src={`/review/${String(p.n).padStart(2, '0')}.jpg`}>
+                  <img
+                    src={`/review/${String(p.n).padStart(2, '0')}.jpg`}
+                    alt={`Photo ${p.n}`}
+                    width={p.w}
+                    height={p.h}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="num">#{p.n}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section--white" id="picks">
+    <div class="container narrow">
+      <p class="eyebrow">Your picks</p>
+      <h2>What the new site needs</h2>
+      <p class="lead">Type the photo number(s) that fit. Blank = we need a new photo for that one.</p>
+      <form class="picks" data-picks>
+        {
+          needs.map((s) => (
+            <fieldset>
+              <legend>{s.section}</legend>
+              {s.items.map((item) => (
+                <div class="pick" data-pick={item.id} data-label={item.label}>
+                  <div class="pick-copy">
+                    <label for={`n-${item.id}`}>{item.label}</label>
+                    <small>{item.want}</small>
+                  </div>
+                  <input id={`n-${item.id}`} name={`n-${item.id}`} type="text" inputmode="numeric" placeholder="Photo #" autocomplete="off" />
+                  <input id={`c-${item.id}`} name={`c-${item.id}`} type="text" placeholder="Town / notes" autocomplete="off" />
+                </div>
+              ))}
+            </fieldset>
+          ))
+        }
+        <fieldset>
+          <legend>Anything else</legend>
+          <div class="pick pick--wide">
+            <div class="pick-copy">
+              <label for="extra">Other notes</label>
+              <small>Photos I've mislabeled, photos to leave off the site, jobs you want featured, anything.</small>
+            </div>
+            <textarea id="extra" name="extra" rows="4"></textarea>
+          </div>
+        </fieldset>
+        <div class="actions">
+          <button class="button" type="button" data-send>Send my picks</button>
+          <button class="button-secondary" type="button" data-copy>Copy answers instead</button>
+          <span class="status" data-status aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <dialog class="viewer" data-viewer>
+    <button type="button" class="viewer-close" data-viewer-close aria-label="Close">Close</button>
+    <img alt="" data-viewer-img />
+    <p class="viewer-caption" data-viewer-caption></p>
+  </dialog>
+</Layout>
+
+<script is:inline define:vars={{ REPLY_TO, phone: site.phoneDisplay }}>
+  const KEY = 'rrr-photo-picks-v1';
+  const form = document.querySelector('[data-picks]');
+  const status = document.querySelector('[data-status]');
+  const fields = [...form.querySelectorAll('input, textarea')];
+
+  // restore
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    for (const f of fields) if (saved[f.name]) f.value = saved[f.name];
+  } catch {}
+
+  // autosave
+  form.addEventListener('input', () => {
+    const data = {};
+    for (const f of fields) if (f.value.trim()) data[f.name] = f.value.trim();
+    localStorage.setItem(KEY, JSON.stringify(data));
+  });
+
+  function summary() {
+    const lines = ['Red Rock photo picks', ''];
+    const blanks = [];
+    let currentSection = '';
+    for (const row of form.querySelectorAll('[data-pick]')) {
+      const section = row.closest('fieldset').querySelector('legend').textContent;
+      if (section !== currentSection) { currentSection = section; lines.push('## ' + section); }
+      const label = row.dataset.label;
+      const n = row.querySelector('input[type="text"][inputmode]').value.trim();
+      const note = row.querySelector('input:not([inputmode])').value.trim();
+      if (!n) blanks.push(label);
+      lines.push('- ' + label + ': ' + (n ? '#' + n : '(none — need new photo)') + (note ? '  [' + note + ']' : ''));
+    }
+    const extra = form.querySelector('#extra').value.trim();
+    if (extra) lines.push('', '## Other notes', extra);
+    lines.push('', '## Still need photos for', ...(blanks.length ? blanks.map((b) => '- ' + b) : ['(nothing — everything filled)']));
+    return lines.join('\n');
+  }
+
+  document.querySelector('[data-copy]').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(summary());
+      status.textContent = 'Copied. Paste it into a text or email.';
+    } catch {
+      status.textContent = 'Could not copy — use Send instead.';
+    }
+  });
+
+  document.querySelector('[data-send]').addEventListener('click', () => {
+    const body = encodeURIComponent(summary());
+    window.location.href = 'mailto:' + REPLY_TO + '?subject=' + encodeURIComponent('Red Rock photo picks') + '&body=' + body;
+    status.textContent = 'Opening your email app…';
+  });
+
+  // viewer
+  const viewer = document.querySelector('[data-viewer]');
+  const vimg = viewer.querySelector('[data-viewer-img]');
+  const vcap = viewer.querySelector('[data-viewer-caption]');
+  document.querySelectorAll('.photo').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      vimg.src = btn.dataset.src;
+      vimg.alt = 'Photo ' + btn.dataset.n;
+      vcap.textContent = '#' + btn.dataset.n;
+      viewer.showModal();
+    });
+  });
+  viewer.querySelector('[data-viewer-close]').addEventListener('click', () => viewer.close());
+  viewer.addEventListener('click', (e) => { if (e.target === viewer) viewer.close(); });
+</script>
+
+<style>
+  .narrow { max-width: 760px; }
+  .how { margin: var(--space-3) 0 var(--space-4); padding-left: 1.3rem; }
+  .how li { margin-bottom: 0.4rem; }
+
+  .group { margin-top: var(--space-5); }
+  .group h3 { margin-bottom: var(--space-3); }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-2);
+  }
+  .photo {
+    position: relative;
+    display: block;
+    padding: 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-white);
+    overflow: hidden;
+    cursor: zoom-in;
+    aspect-ratio: 3 / 4;
+  }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .num {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: var(--color-red-rock);
+    color: var(--color-white);
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+
+  .picks fieldset {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-3) var(--space-2);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-paper);
+  }
+  .picks legend { padding: 0 0.4rem; font-weight: 900; }
+  .pick {
+    display: grid;
+    grid-template-columns: 1fr 110px minmax(160px, 1fr);
+    gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .pick:first-of-type { border-top: 0; }
+  .pick--wide { grid-template-columns: 1fr; }
+  .pick label { display: block; font-weight: 800; }
+  .pick small { display: block; color: var(--color-muted); line-height: 1.4; }
+  .pick input, .pick textarea {
+    width: 100%;
+    padding: 0.6rem 0.65rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-white);
+    font-size: 1rem;
+  }
+  .pick input[inputmode] { font-weight: 800; text-align: center; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+  .actions button { cursor: pointer; }
+  .status { color: var(--color-muted); }
+
+  .viewer { max-width: min(96vw, 1000px); padding: 0; border: 0; border-radius: var(--radius); background: var(--color-ink); }
+  .viewer::backdrop { background: rgb(0 0 0 / 0.8); }
+  .viewer img { display: block; max-width: 96vw; max-height: 85vh; width: auto; height: auto; margin: 0 auto; }
+  .viewer-caption { margin: 0; padding: 0.5rem 1rem; color: var(--color-white); font-weight: 900; text-align: center; }
+  .viewer-close {
+    position: absolute; top: 8px; right: 8px; padding: 0.4rem 0.8rem;
+    border: 0; border-radius: var(--radius); background: var(--color-white); font-weight: 800; cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+    .pick { grid-template-columns: 1fr 1fr; }
+    .pick-copy { grid-column: 1 / -1; }
+    .photo-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

@@ -3,12 +3,9 @@ import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
 import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
 import ServiceCard from '@components/ServiceCard.astro';
-import Testimonial from '@components/Testimonial.astro';
 import { site } from '@data/site';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
-const testimonials = await getCollection('testimonials');
-const emily = testimonials.find((testimonial) => testimonial.id === 'emily-johnson') ?? testimonials[0];
 const title = 'Flooring Contractor in Berthoud, CO | Red Rock Remodeling';
 const description =
   'Berthoud flooring contractor installing hardwood, LVP, tile, carpet, and stairs across Northern Colorado. Call Red Rock Remodeling for a free measure.';
@@ -142,12 +139,6 @@ const description =
           {site.serviceAreaCities.map((city) => <li>{city}</li>)}
         </ul>
       </div>
-    </div>
-  </section>
-
-  <section class="section section--white">
-    <div class="container">
-      <Testimonial quote={emily.data.quote} author={emily.data.author} context={emily.data.context} />
     </div>
   </section>
 

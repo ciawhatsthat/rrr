@@ -1,6 +1,8 @@
 User-agent: *
 Disallow: /admin
 Disallow: /admin/
+Disallow: /photo-review
+Disallow: /review/
 Allow: /
 
 Sitemap: https://www.red-rock-remodeling.net/sitemap-index.xml
