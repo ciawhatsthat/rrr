@@ -1,5 +1,5 @@
 ---
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 const pathname = Astro.url.pathname;
 const links = [
@@ -10,21 +10,22 @@ const links = [
 ];
 
 function isCurrent(href: string) {
-  if (href === '/') return pathname === '/';
-  return pathname.startsWith(href);
+  const full = withBase(href);
+  if (href === '/') return pathname === full || pathname === `${full}/`;
+  return pathname.startsWith(full);
 }
 ---
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="/" aria-label="Red Rock Remodeling home">
-      <img src={site.logoPath} alt="Red Rock Remodeling" width="220" height="78" />
+    <a class="brand" href={withBase('/')} aria-label="Red Rock Remodeling home">
+      <img src={withBase(site.logoPath)} alt="Red Rock Remodeling" width="220" height="78" />
     </a>
     <nav class="primary-nav" aria-label="Primary navigation">
       {
         links.map((link) => (
-          <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+          <a href={withBase(link.href)} aria-current={isCurrent(link.href) ? 'page' : undefined}>
             {link.label}
           </a>
         ))

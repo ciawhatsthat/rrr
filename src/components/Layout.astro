@@ -3,6 +3,7 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import MetaTags from '@components/MetaTags.astro';
 import SchemaLocalBusiness from '@components/SchemaLocalBusiness.astro';
+import { withBase } from '@data/site';
 import '@styles/tokens.css';
 import '@styles/global.css';
 
@@ -23,6 +24,7 @@ const { title, description, canonicalPath, ogImage, noindex } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href={withBase('/favicon.png')} type="image/png" />
     <MetaTags title={title} description={description} canonicalPath={canonicalPath} ogImage={ogImage} noindex={noindex} />
     <SchemaLocalBusiness />
   </head>

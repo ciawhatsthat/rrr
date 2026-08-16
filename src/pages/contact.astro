@@ -2,7 +2,7 @@
 import Layout from '@components/Layout.astro';
 import ContactForm from '@components/ContactForm.astro';
 import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 const title = 'Contact Red Rock Remodeling - Flooring Contractor in Berthoud, CO';
 const description =
@@ -54,7 +54,7 @@ const description =
           <div class="area-links" aria-label="Location pages">
             {
               site.primaryAreaLinks.map((area) => (
-                <a href={area.href}>Flooring contractor in {area.city}</a>
+                <a href={withBase(area.href)}>Flooring contractor in {area.city}</a>
               ))
             }
           </div>

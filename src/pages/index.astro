@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
 import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
 import ServiceCard from '@components/ServiceCard.astro';
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 const title = 'Flooring Contractor in Berthoud, CO | Red Rock Remodeling';
@@ -30,7 +30,7 @@ const description =
       </p>
       <div class="button-row">
         <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
-        <a class="button-secondary" href="/portfolio/">See our work</a>
+        <a class="button-secondary" href={withBase('/portfolio/')}>See our work</a>
       </div>
     </div>
   </section>
@@ -106,7 +106,7 @@ const description =
           It is a good example of why flooring is not just the surface you see. Prep and repair
           are what keep the finished floor solid.
         </p>
-        <a class="button-secondary" href="/portfolio/">View portfolio</a>
+        <a class="button-secondary" href={withBase('/portfolio/')}>View portfolio</a>
       </div>
     </div>
   </section>
@@ -131,7 +131,7 @@ const description =
         <div class="area-links" aria-label="Location pages">
           {
             site.primaryAreaLinks.map((area) => (
-              <a href={area.href}>Flooring contractor in {area.city}</a>
+              <a href={withBase(area.href)}>Flooring contractor in {area.city}</a>
             ))
           }
         </div>
@@ -154,7 +154,7 @@ const description =
       </div>
       <div class="button-row">
         <a class="button" href={site.phoneHref}>{site.phoneDisplay}</a>
-        <a class="button-secondary" href="/contact/">Contact page</a>
+        <a class="button-secondary" href={withBase('/contact/')}>Contact page</a>
       </div>
     </div>
   </section>

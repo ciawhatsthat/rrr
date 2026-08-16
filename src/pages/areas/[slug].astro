@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
 import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
 import ServiceCard from '@components/ServiceCard.astro';
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 export async function getStaticPaths() {
   const locations = await getCollection('locations');
@@ -29,7 +29,7 @@ const todoComment = `<!-- ${data.localNote} -->`;
         <p class="lead">{data.intro}</p>
         <div class="button-row">
           <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
-          <a class="button-secondary" href="/contact/">Request a measure</a>
+          <a class="button-secondary" href={withBase('/contact/')}>Request a measure</a>
         </div>
       </div>
       <PhotoPlaceholder

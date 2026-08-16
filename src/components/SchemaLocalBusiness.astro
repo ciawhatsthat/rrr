@@ -15,10 +15,10 @@ const { aggregateRating } = Astro.props;
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'HomeAndConstructionBusiness',
-  '@id': `${site.baseUrl}/#business`,
+  '@id': `${absoluteUrl('/')}#business`,
   name: site.name,
   image: absoluteUrl(site.logoPath),
-  url: `${site.baseUrl}/`,
+  url: absoluteUrl('/'),
   telephone: site.phoneE164,
   email: site.email,
   priceRange: site.priceRange,

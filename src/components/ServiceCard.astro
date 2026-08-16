@@ -1,4 +1,5 @@
 ---
+import { withBase } from '@data/site';
 import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
 
 interface Props {
@@ -22,9 +23,9 @@ const dataReplace = Astro.props['data-replace'];
     aspect="4 / 3"
   />
   <div class="service-card-body">
-    <h3><a href={href}>{title}</a></h3>
+    <h3><a href={withBase(href)}>{title}</a></h3>
     <p>{description}</p>
-    <a class="learn-more" href={href}>Learn more about {title}</a>
+    <a class="learn-more" href={withBase(href)}>Learn more about {title}</a>
   </div>
 </article>
 

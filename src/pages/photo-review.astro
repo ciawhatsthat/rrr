@@ -6,7 +6,7 @@
  */
 import Layout from '@components/Layout.astro';
 import photos from '@data/review-photos.json';
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 // Where Andrew's answers get emailed. Leave blank to open a mail draft with no recipient.
 const REPLY_TO = '';
@@ -140,9 +140,9 @@ const totalNeeds = needs.reduce((n, s) => n + s.items.length, 0);
             <h3>{group.name}</h3>
             <div class="photo-grid">
               {group.photos.map((p) => (
-                <button type="button" class="photo" data-n={p.n} data-src={`/review/${String(p.n).padStart(2, '0')}.jpg`}>
+                <button type="button" class="photo" data-n={p.n} data-src={withBase(`/review/${String(p.n).padStart(2, '0')}.jpg`)}>
                   <img
-                    src={`/review/${String(p.n).padStart(2, '0')}.jpg`}
+                    src={withBase(`/review/${String(p.n).padStart(2, '0')}.jpg`)}
                     alt={`Photo ${p.n}`}
                     width={p.w}
                     height={p.h}

@@ -18,11 +18,23 @@ Deployed to GitHub Pages by [.github/workflows/deploy.yml](.github/workflows/dep
 on every push to `main` (build → upload `dist/` → deploy-pages). No `gh-pages` branch.
 
 One-time setup in the GitHub repo: **Settings → Pages → Source: GitHub Actions**.
-Custom domain is set by [public/CNAME](public/CNAME) (`red-rock-remodeling.net`);
-point the domain's DNS at GitHub Pages and enable "Enforce HTTPS" once the cert issues.
-Canonical URLs use `https://www.red-rock-remodeling.net` (see `astro.config.mjs` and
-`src/data/site.ts`) — GitHub Pages redirects apex ↔ www automatically when both DNS
-records exist.
+
+**Current target: `https://ciawhatsthat.github.io/rrr/`** (project page, base path `/rrr`).
+`site` and `base` are set in `astro.config.mjs`; every internal link goes through
+`withBase()` from `src/data/site.ts`, so the base path is applied in one place.
+
+**Switching to the custom domain later** (red-rock-remodeling.net):
+1. In `astro.config.mjs` change the defaults to `SITE_URL = 'https://www.red-rock-remodeling.net'`
+   and `SITE_BASE = '/'` (or set those env vars in the workflow).
+2. Restore `public/CNAME` containing `red-rock-remodeling.net`.
+3. Update the `Sitemap:` line in `public/robots.txt`.
+4. Point DNS at GitHub Pages, set the custom domain in Settings → Pages, enable "Enforce HTTPS".
+
+## Private pages
+
+- `/photo-review/` — photo picker for Andrew. Noindex, not in the sitemap, not linked from nav.
+  Photos come from `public/review/` (web-sized copies of the old site's photos, generated from
+  `old-site/images/`, which is gitignored and produced by `scripts/scrape-old-site.mjs`).
 
 ## Content
 

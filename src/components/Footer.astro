@@ -1,5 +1,5 @@
 ---
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 const year = new Date().getFullYear();
 ---
@@ -8,7 +8,7 @@ const year = new Date().getFullYear();
   <div class="footer-inner">
     <section class="footer-main" aria-label="Red Rock Remodeling contact information">
       <div>
-        <img src={site.logoPath} alt="Red Rock Remodeling" width="210" height="75" />
+        <img src={withBase(site.logoPath)} alt="Red Rock Remodeling" width="210" height="75" />
         <p>
           Flooring installation based in Berthoud, Colorado. Hardwood, LVP, tile, carpet, stairs,
           tear-out, subfloor repair, and trim work.
@@ -25,17 +25,17 @@ const year = new Date().getFullYear();
       </div>
       <nav aria-label="Footer navigation">
         <h2>Pages</h2>
-        <a href="/">Home</a>
-        <a href="/services/">Services</a>
-        <a href="/portfolio/">Portfolio</a>
-        <a href="/contact/">Contact</a>
+        <a href={withBase('/')}>Home</a>
+        <a href={withBase('/services/')}>Services</a>
+        <a href={withBase('/portfolio/')}>Portfolio</a>
+        <a href={withBase('/contact/')}>Contact</a>
       </nav>
       <div>
         <h2>Service Area</h2>
         <nav class="area-nav" aria-label="Location pages">
           {
             site.primaryAreaLinks.map((area) => (
-              <a href={area.href}>Flooring contractor in {area.city}</a>
+              <a href={withBase(area.href)}>Flooring contractor in {area.city}</a>
             ))
           }
         </nav>

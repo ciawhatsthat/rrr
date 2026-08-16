@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
 import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
-import { site } from '@data/site';
+import { site, withBase } from '@data/site';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -26,7 +26,7 @@ const data = service.data;
           {data.lead.map((paragraph) => <p class="lead-copy">{paragraph}</p>)}
           <div class="button-row">
             <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
-            <a class="button-secondary" href="/contact/">Request a measure</a>
+            <a class="button-secondary" href={withBase('/contact/')}>Request a measure</a>
           </div>
         </div>
         <PhotoPlaceholder
@@ -91,7 +91,7 @@ const data = service.data;
           </p>
           <div class="button-row">
             <a class="button" href={site.phoneHref}>{site.phoneDisplay}</a>
-            <a class="button-secondary" href="/contact/">Contact page</a>
+            <a class="button-secondary" href={withBase('/contact/')}>Contact page</a>
           </div>
         </aside>
       </div>

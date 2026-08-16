@@ -1,8 +1,6 @@
 export const site = {
   name: 'Red Rock Remodeling',
   owner: 'Andrew',
-  baseUrl: 'https://www.red-rock-remodeling.net',
-  domain: 'red-rock-remodeling.net',
   phoneDisplay: '720-429-9394',
   phoneHref: 'tel:+17204299394',
   phoneE164: '+17204299394',
@@ -67,6 +65,15 @@ export const site = {
   services: ['Hardwood', 'Luxury Vinyl Plank', 'Tile', 'Carpet', 'Stairs']
 } as const;
 
+/** Site origin and base path come from astro.config.mjs (site / base). */
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, ''); // '' at root, '/rrr' on GitHub project pages
+
+/** Prefix a root-relative path ('/services/') with the deploy base path. Use for every internal href/src. */
+export function withBase(path: string) {
+  return `${BASE}${path.startsWith('/') ? path : `/${path}`}`;
+}
+
+/** Absolute URL for canonical / OG / JSON-LD. */
 export function absoluteUrl(path = '/') {
-  return new URL(path, site.baseUrl).toString();
+  return new URL(withBase(path), import.meta.env.SITE).toString();
 }
