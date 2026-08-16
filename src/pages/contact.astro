@@ -1,0 +1,141 @@
+---
+import Layout from '@components/Layout.astro';
+import ContactForm from '@components/ContactForm.astro';
+import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import { site } from '@data/site';
+
+const title = 'Contact Red Rock Remodeling - Flooring Contractor in Berthoud, CO';
+const description =
+  'Contact Red Rock Remodeling, a flooring contractor in Berthoud, CO, for hardwood, LVP, tile, carpet, and stair installation estimates. Call Andrew today.';
+---
+
+<Layout title={title} description={description} canonicalPath="/contact/">
+  <section class="section section--white contact-hero">
+    <div class="container two-column">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h1>Contact Red Rock Remodeling</h1>
+        <p class="lead">
+          Call or text Andrew for a free consultation, measure, and bid. Share what room you are
+          changing, what is there now, and what flooring you are considering.
+        </p>
+        <a class="phone-hero" href={site.phoneHref}>{site.phoneDisplay}</a>
+      </div>
+      <PhotoPlaceholder
+        label="Contact photo"
+        detail="Finished project or Andrew on site"
+        data-replace="CONTACT: finished flooring project or Andrew jobsite portrait"
+        alt="Red Rock Remodeling contact page project photo"
+        aspect="4 / 3"
+      />
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container contact-layout">
+      <section class="surface form-panel">
+        <h2>Project details</h2>
+        <ContactForm />
+      </section>
+      <aside class="contact-details">
+        <section class="surface detail-card">
+          <h2>Phone and email</h2>
+          <p>
+            <a href={site.phoneHref}>{site.phoneDisplay}</a><br />
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </p>
+        </section>
+        <section class="surface detail-card">
+          <h2>Hours</h2>
+          <p>{site.hours.display}</p>
+        </section>
+        <section class="surface detail-card">
+          <h2>Service area</h2>
+          <div class="area-links" aria-label="Location pages">
+            {
+              site.primaryAreaLinks.map((area) => (
+                <a href={area.href}>Flooring contractor in {area.city}</a>
+              ))
+            }
+          </div>
+          <p>{site.serviceAreaCities.join(', ')}</p>
+          <p><strong>Don't see your city?</strong><br />Give us a call to check.</p>
+        </section>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact-hero {
+    padding-bottom: var(--space-6);
+  }
+
+  .phone-hero {
+    display: inline-flex;
+    margin-top: var(--space-3);
+    color: var(--color-red-rock);
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 9vw, 4rem);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .form-panel,
+  .detail-card {
+    padding: var(--space-4);
+  }
+
+  .form-panel h2,
+  .detail-card h2 {
+    font-size: var(--step-3);
+  }
+
+  .contact-details {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .detail-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .area-links {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .area-links a {
+    display: inline-flex;
+    min-height: 42px;
+    border: 1px solid rgb(168 40 34 / 0.3);
+    border-radius: var(--radius);
+    background: var(--color-paper);
+    padding: 0.45rem 0.65rem;
+    align-items: center;
+    color: var(--color-red-rock);
+    font-size: var(--step--1);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .area-links a:hover {
+    border-color: var(--color-red-rock);
+    background: var(--color-red-rock);
+    color: var(--color-white);
+  }
+
+  @media (min-width: 900px) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+    }
+  }
+</style>

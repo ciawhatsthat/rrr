@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@components/Layout.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const title = 'Flooring Services - Hardwood, LVP, Tile, Carpet | Red Rock Remodeling';
+const description =
+  'Compare flooring services from Red Rock Remodeling: hardwood, LVP, tile, carpet, and stairs installed across Berthoud and Northern Colorado.';
+---
+
+<Layout title={title} description={description} canonicalPath="/services/">
+  <section class="section section--white page-hero">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h1>Flooring Services</h1>
+      <p class="lead">
+        Red Rock Remodeling installs flooring across the Front Range, with the tear-out,
+        subfloor prep, trim, and transition details that make the finished floor work.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="grid">
+        {
+          services.map((service) => (
+            <ServiceCard
+              title={service.data.title}
+              description={service.data.shortDescription}
+              href={`/services/${service.id}/`}
+              data-replace={service.data['card-data-replace']}
+              alt={service.data.cardAlt}
+            />
+          ))
+        }
+      </div>
+      <div class="related surface">
+        <h2>Related flooring work</h2>
+        <p>
+          Engineered hardwood, laminate, sheet vinyl, rubber flooring, tear-out, subfloor repair,
+          transitions, and base work can be included when they fit the project. The first step is
+          a measure and a practical conversation about the room.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding-bottom: var(--space-5);
+  }
+
+  .related {
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+  }
+
+  .related h2 {
+    font-size: var(--step-3);
+  }
+
+  .related p {
+    max-width: 780px;
+    margin-bottom: 0;
+    color: var(--color-muted);
+  }
+</style>

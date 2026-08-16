@@ -1,0 +1,45 @@
+---
+interface Props {
+  quote: string;
+  author: string;
+  context?: string;
+}
+
+const { quote, author, context } = Astro.props;
+---
+
+<figure class="testimonial">
+  <blockquote>{quote}</blockquote>
+  <figcaption>
+    <strong>{author}</strong>
+    {context && <span>{context}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .testimonial {
+    margin: 0;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border-left: 6px solid var(--color-red-rock);
+    background: var(--color-white);
+  }
+
+  blockquote {
+    margin: 0 0 var(--space-3);
+    color: var(--color-ink);
+    font-family: var(--font-heading);
+    font-size: clamp(1.45rem, 4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  figcaption {
+    display: grid;
+    gap: 0.15rem;
+    color: var(--color-muted);
+  }
+
+  strong {
+    color: var(--color-ink);
+  }
+</style>

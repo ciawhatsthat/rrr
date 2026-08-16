@@ -1,0 +1,85 @@
+---
+import { site } from '@data/site';
+---
+
+<!-- TODO: replace mailto fallback with Formspree or another static form endpoint when chosen. -->
+<form class="contact-form" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" autocomplete="name" required />
+  </div>
+  <div class="field">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required />
+  </div>
+  <div class="field">
+    <label for="phone">Phone</label>
+    <input id="phone" name="phone" type="tel" autocomplete="tel" />
+  </div>
+  <div class="field">
+    <label for="project-type">Project type</label>
+    <select id="project-type" name="project_type">
+      <option value="">Select a project type</option>
+      <option>Hardwood</option>
+      <option>Luxury vinyl plank</option>
+      <option>Tile</option>
+      <option>Carpet</option>
+      <option>Stairs</option>
+      <option>Subfloor repair</option>
+      <option>Other flooring project</option>
+    </select>
+  </div>
+  <div class="field field-full">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="7" required></textarea>
+  </div>
+  <button class="button field-full" type="submit">Send project details</button>
+</form>
+
+<style>
+  .contact-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .field-full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    color: var(--color-ink);
+    font-weight: 800;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-white);
+    color: var(--color-ink);
+    padding: 0.75rem 0.8rem;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    justify-self: start;
+    cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

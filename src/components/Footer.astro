@@ -1,0 +1,118 @@
+---
+import { site } from '@data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <section class="footer-main" aria-label="Red Rock Remodeling contact information">
+      <div>
+        <img src={site.logoPath} alt="Red Rock Remodeling" width="210" height="75" />
+        <p>
+          Flooring installation based in Berthoud, Colorado. Hardwood, LVP, tile, carpet, stairs,
+          tear-out, subfloor repair, and trim work.
+        </p>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <p>
+          <a href={site.phoneHref}>{site.phoneDisplay}</a><br />
+          <a href={`mailto:${site.email}`}>{site.email}</a><br />
+          Berthoud, CO {site.address.postalCode}
+        </p>
+        <p>{site.hours.display}</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <h2>Pages</h2>
+        <a href="/">Home</a>
+        <a href="/services/">Services</a>
+        <a href="/portfolio/">Portfolio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div>
+        <h2>Service Area</h2>
+        <nav class="area-nav" aria-label="Location pages">
+          {
+            site.primaryAreaLinks.map((area) => (
+              <a href={area.href}>Flooring contractor in {area.city}</a>
+            ))
+          }
+        </nav>
+        <p>{site.serviceAreaCities.join(', ')}</p>
+        <p class="socials">
+          <a href={site.social.facebook} rel="noopener" target="_blank">Facebook</a>
+          <a href={site.social.instagram} rel="noopener" target="_blank">Instagram</a>
+        </p>
+      </div>
+    </section>
+    <p class="copyright">&copy; {year} Red Rock Remodeling. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: var(--space-6) var(--space-4) var(--space-4);
+    background: var(--color-ink);
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .footer-inner {
+    width: min(100%, var(--max-page));
+    margin-inline: auto;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: var(--space-5);
+  }
+
+  img {
+    margin-bottom: var(--space-3);
+    width: min(210px, 70vw);
+    height: auto;
+    filter: brightness(1.06);
+  }
+
+  h2 {
+    margin-bottom: var(--space-2);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0 0 var(--space-3);
+  }
+
+  a {
+    color: var(--color-white);
+  }
+
+  nav {
+    display: grid;
+    align-content: start;
+    gap: 0.35rem;
+  }
+
+  .area-nav {
+    margin-bottom: var(--space-3);
+  }
+
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .copyright {
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+    color: rgb(255 255 255 / 0.62);
+    font-size: var(--step--1);
+  }
+</style>

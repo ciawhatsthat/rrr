@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@components/Layout.astro';
+import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import { site } from '@data/site';
+
+export async function getStaticPaths() {
+  const locations = await getCollection('locations');
+  return locations.map((location) => ({
+    params: { slug: location.id },
+    props: { location }
+  }));
+}
+
+const { location } = Astro.props;
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const data = location.data;
+const todoComment = `<!-- ${data.localNote} -->`;
+---
+
+<Layout title={data.seoTitle} description={data.metaDescription} canonicalPath={`/areas/${location.id}/`}>
+  <Fragment set:html={todoComment} />
+  <section class="section section--white location-hero">
+    <div class="container two-column">
+      <div>
+        <p class="eyebrow">Service Area</p>
+        <h1>Flooring Contractor in {data.city}, CO</h1>
+        <p class="lead">{data.intro}</p>
+        <div class="button-row">
+          <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+          <a class="button-secondary" href="/contact/">Request a measure</a>
+        </div>
+      </div>
+      <PhotoPlaceholder
+        label={`${data.city} flooring`}
+        detail="Local project photo placeholder"
+        data-replace={data.photoSlots[0]['data-replace']}
+        alt={data.photoSlots[0].alt}
+        aspect={data.photoSlots[0].aspect}
+      />
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h2>Flooring services in {data.city}</h2>
+      <div class="grid services-list">
+        {
+          services.map((service) => (
+            <ServiceCard
+              title={service.data.title}
+              description={service.data.shortDescription}
+              href={`/services/${service.id}/`}
+              data-replace={service.data['card-data-replace']}
+              alt={service.data.cardAlt}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container">
+      <p class="eyebrow">Recent Work</p>
+      <h2>Selected {data.city} project photos</h2>
+      <div class="grid local-photos">
+        {
+          data.photoSlots.map((slot) => (
+            <PhotoPlaceholder
+              label={slot.label}
+              detail="Replace with local project photo"
+              data-replace={slot['data-replace']}
+              alt={slot.alt}
+              aspect={slot.aspect ?? '4 / 3'}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container cta-row">
+      <div>
+        <p class="eyebrow">Measure And Bid</p>
+        <h2>Planning a floor in {data.city}?</h2>
+        <p>
+          Call or text Andrew with the flooring type, room size, and what needs to come out.
+          Red Rock Remodeling can schedule a measure and talk through the right next step.
+        </p>
+      </div>
+      <a class="button" href={site.phoneHref}>{site.phoneDisplay}</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .location-hero {
+    padding-bottom: var(--space-6);
+  }
+
+  .services-list,
+  .local-photos {
+    margin-top: var(--space-4);
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta-row p {
+    max-width: 720px;
+    color: var(--color-muted);
+  }
+</style>

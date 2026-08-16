@@ -1,0 +1,77 @@
+---
+interface Props {
+  label: string;
+  detail?: string;
+  'data-replace': string;
+  alt: string;
+  aspect?: string;
+  class?: string;
+}
+
+const {
+  label,
+  detail = 'Photo slot reserved',
+  alt,
+  aspect = '4 / 3'
+} = Astro.props;
+const dataReplace = Astro.props['data-replace'];
+const className = Astro.props.class ?? '';
+---
+
+<figure
+  class:list={['photo-placeholder', className]}
+  data-replace={dataReplace}
+  role="img"
+  aria-label={alt}
+  style={`--placeholder-aspect: ${aspect};`}
+>
+  <div class="placeholder-content">
+    <span>{label}</span>
+    <small>{detail}</small>
+  </div>
+</figure>
+
+<style>
+  .photo-placeholder {
+    display: grid;
+    min-height: 180px;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    aspect-ratio: var(--placeholder-aspect);
+    background:
+      linear-gradient(135deg, rgb(168 40 34 / 0.08), transparent 42%),
+      repeating-linear-gradient(
+        -45deg,
+        var(--color-soft),
+        var(--color-soft) 10px,
+        #ebe4dc 10px,
+        #ebe4dc 20px
+      );
+    color: var(--color-muted);
+    place-items: center;
+  }
+
+  .placeholder-content {
+    display: grid;
+    gap: 0.2rem;
+    max-width: 78%;
+    text-align: center;
+  }
+
+  .placeholder-content span {
+    color: var(--color-ink);
+    font-size: var(--step--1);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .placeholder-content small {
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+</style>

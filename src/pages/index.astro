@@ -1,0 +1,359 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@components/Layout.astro';
+import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import ServiceCard from '@components/ServiceCard.astro';
+import Testimonial from '@components/Testimonial.astro';
+import { site } from '@data/site';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const testimonials = await getCollection('testimonials');
+const emily = testimonials.find((testimonial) => testimonial.id === 'emily-johnson') ?? testimonials[0];
+const title = 'Flooring Contractor in Berthoud, CO | Red Rock Remodeling';
+const description =
+  'Berthoud flooring contractor installing hardwood, LVP, tile, carpet, and stairs across Northern Colorado. Call Red Rock Remodeling for a free measure.';
+---
+
+<Layout title={title} description={description} canonicalPath="/">
+  <section class="hero">
+    <PhotoPlaceholder
+      class="hero-image"
+      label="Flooring hero"
+      detail="Finished install, wide landscape photo"
+      data-replace="HOME: hero, best finished flooring project, landscape"
+      alt="Finished flooring project by Red Rock Remodeling"
+      aspect="16 / 9"
+    />
+    <div class="hero-content container">
+      <p class="eyebrow">Berthoud, Colorado</p>
+      <h1>Flooring Contractor in Berthoud, CO</h1>
+      <p>
+        Red Rock Remodeling installs hardwood, LVP, tile, carpet, and stairs across the
+        Front Range with 30+ years of practical flooring experience.
+      </p>
+      <div class="button-row">
+        <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+        <a class="button-secondary" href="/portfolio/">See our work</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h2>Floors built for the way the room is used</h2>
+      <p class="lead">
+        From tear-out and subfloor repair to trim and transitions, the details under and around
+        the finished floor are part of the job.
+      </p>
+      <div class="grid service-grid">
+        {
+          services.map((service) => (
+            <ServiceCard
+              title={service.data.title}
+              description={service.data.shortDescription}
+              href={`/services/${service.id}/`}
+              data-replace={service.data['card-data-replace']}
+              alt={service.data.cardAlt}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container two-column">
+      <div>
+        <p class="eyebrow">About Red Rock</p>
+        <h2>Berthoud-based, flooring-focused</h2>
+        <p>
+          Andrew has more than 30 years of flooring experience and works from Berthoud across
+          Northern Colorado. Red Rock handles laminate, engineered wood, LVP, sheet vinyl,
+          ceramic tile, and new construction flooring projects, with the focus where it belongs:
+          floors.
+        </p>
+        <p>
+          That means plain bids, practical material conversations, tear-out when needed, subfloor
+          prep when the room calls for it, and trim details that make the finished floor look done.
+        </p>
+      </div>
+      <PhotoPlaceholder
+        label="About photo"
+        detail="Andrew or crew working on flooring"
+        data-replace="ABOUT: Andrew or crew installing flooring, jobsite photo"
+        alt="Red Rock Remodeling working on a flooring installation"
+        aspect="4 / 3"
+      />
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container two-column project-feature">
+      <PhotoPlaceholder
+        label="Before-after"
+        detail="Bathroom subfloor repair and LVP"
+        data-replace="FEATURED PROJECT: bathroom tile tear-out, rotten subfloor repair, new LVP, toilet reinstall, wood base"
+        alt="Bathroom flooring project with subfloor repair and new LVP"
+        aspect="4 / 3"
+      />
+      <div>
+        <p class="eyebrow">Featured Project</p>
+        <h2>A bathroom floor that needed more than new planks</h2>
+        <p>
+          On one bathroom redo, Red Rock removed the old tile and toilet, then found moldy,
+          rotten subfloor underneath. Andrew cut out the bad subfloor, installed new LVP,
+          reinstalled the toilet, and finished the room with new wood base.
+        </p>
+        <p>
+          It is a good example of why flooring is not just the surface you see. Prep and repair
+          are what keep the finished floor solid.
+        </p>
+        <a class="button-secondary" href="/portfolio/">View portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container service-area">
+      <div>
+        <p class="eyebrow">Service Area</p>
+        <h2>Front Range flooring work from Fort Collins to Castle Rock</h2>
+        <p class="lead">
+          Red Rock Remodeling is based in Berthoud and serves homeowners across the Front Range,
+          from Fort Collins down to Castle Rock. Don't see your city below? Call us.
+        </p>
+      </div>
+      <div class="area-panel" aria-label="Service area cities">
+        <div class="range-line" aria-hidden="true">
+          <span>Fort Collins</span>
+          <span>Berthoud</span>
+          <span>Boulder</span>
+          <span>Castle Rock</span>
+        </div>
+        <div class="area-links" aria-label="Location pages">
+          {
+            site.primaryAreaLinks.map((area) => (
+              <a href={area.href}>Flooring contractor in {area.city}</a>
+            ))
+          }
+        </div>
+        <ul>
+          {site.serviceAreaCities.map((city) => <li>{city}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container">
+      <Testimonial quote={emily.data.quote} author={emily.data.author} context={emily.data.context} />
+    </div>
+  </section>
+
+  <section class="section contact-band">
+    <div class="container contact-band-inner">
+      <div>
+        <p class="eyebrow">Ready To Talk Floors?</p>
+        <h2>Schedule a free consultation</h2>
+        <p>
+          Call or text Andrew with the room, flooring type, and what you want changed. He can
+          schedule a measure and bid from there.
+        </p>
+      </div>
+      <div class="button-row">
+        <a class="button" href={site.phoneHref}>{site.phoneDisplay}</a>
+        <a class="button-secondary" href="/contact/">Contact page</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: min(76svh, 720px);
+    padding: clamp(7rem, 14vw, 10rem) var(--space-4) var(--space-6);
+    overflow: hidden;
+    align-items: end;
+    background: var(--color-ink);
+  }
+
+  .hero::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgb(34 32 29 / 0.9), rgb(34 32 29 / 0.42));
+    content: '';
+  }
+
+  .hero :global(.hero-image) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    aspect-ratio: auto;
+    place-items: start end;
+    padding: var(--space-3);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    color: var(--color-white);
+  }
+
+  .hero h1 {
+    max-width: 780px;
+    color: var(--color-white);
+  }
+
+  .hero p:not(.eyebrow) {
+    max-width: 640px;
+    color: rgb(255 255 255 / 0.88);
+    font-size: var(--step-1);
+  }
+
+  .hero .button-secondary {
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+
+  .hero .button-secondary:hover {
+    border-color: var(--color-white);
+    background: var(--color-white);
+    color: var(--color-ink);
+  }
+
+  .service-grid {
+    margin-top: var(--space-5);
+  }
+
+  .project-feature {
+    align-items: center;
+  }
+
+  .service-area {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .area-panel {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-white);
+  }
+
+  .range-line {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .range-line span {
+    position: relative;
+    color: var(--color-ink);
+    font-size: var(--step--1);
+    font-weight: 900;
+    text-align: center;
+  }
+
+  .range-line span::before {
+    display: block;
+    width: 14px;
+    height: 14px;
+    margin: 0 auto var(--space-1);
+    border: 3px solid var(--color-red-rock);
+    border-radius: 50%;
+    background: var(--color-white);
+    content: '';
+  }
+
+  .area-panel ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .area-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: var(--space-2);
+  }
+
+  .area-links a {
+    display: inline-flex;
+    min-height: 44px;
+    border: 1px solid rgb(168 40 34 / 0.3);
+    border-radius: var(--radius);
+    background: var(--color-paper);
+    padding: 0.45rem 0.65rem;
+    align-items: center;
+    color: var(--color-red-rock);
+    font-size: var(--step--1);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .area-links a:hover {
+    border-color: var(--color-red-rock);
+    background: var(--color-red-rock);
+    color: var(--color-white);
+  }
+
+  .area-panel li {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-paper);
+    padding: 0.25rem 0.55rem;
+    color: var(--color-muted);
+    font-size: var(--step--1);
+    font-weight: 700;
+  }
+
+  .contact-band {
+    background: var(--color-red-rock);
+    color: var(--color-white);
+  }
+
+  .contact-band h2,
+  .contact-band .eyebrow {
+    color: var(--color-white);
+  }
+
+  .contact-band p {
+    color: rgb(255 255 255 / 0.86);
+  }
+
+  .contact-band-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .contact-band .button {
+    border-color: var(--color-white);
+    background: var(--color-white);
+    color: var(--color-red-rock);
+  }
+
+  .contact-band .button-secondary {
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+
+  .contact-band .button-secondary:hover {
+    background: var(--color-white);
+    color: var(--color-red-rock);
+  }
+</style>

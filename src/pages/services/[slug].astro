@@ -1,0 +1,136 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@components/Layout.astro';
+import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import { site } from '@data/site';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { slug: service.id },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+const data = service.data;
+---
+
+<Layout title={data.seoTitle} description={data.metaDescription} canonicalPath={`/services/${service.id}/`}>
+  <article>
+    <section class="section section--white service-hero">
+      <div class="container two-column">
+        <div>
+          <p class="eyebrow">Flooring Service</p>
+          <h1>{data.serviceName} Installation in Northern Colorado</h1>
+          {data.lead.map((paragraph) => <p class="lead-copy">{paragraph}</p>)}
+          <div class="button-row">
+            <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+            <a class="button-secondary" href="/contact/">Request a measure</a>
+          </div>
+        </div>
+        <PhotoPlaceholder
+          label={`${data.title} hero`}
+          detail="Finished install photo"
+          data-replace={data.photoSlots[0]['data-replace']}
+          alt={data.photoSlots[0].alt}
+          aspect={data.photoSlots[0].aspect}
+        />
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container detail-grid">
+        <section class="surface detail-block">
+          <h2>Material options</h2>
+          <ul>
+            {data.materialOptions.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+        <section class="surface detail-block">
+          <h2>What is included</h2>
+          <ul>
+            {data.included.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <section class="section section--white">
+      <div class="container">
+        <p class="eyebrow">Recent Work</p>
+        <h2>{data.title} project photos</h2>
+        <div class="grid photo-grid">
+          {
+            data.photoSlots.map((slot) => (
+              <PhotoPlaceholder
+                label={slot.label}
+                detail="Replace with real project photo"
+                data-replace={slot['data-replace']}
+                alt={slot.alt}
+                aspect={slot.aspect ?? '4 / 3'}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="container two-column">
+        <div>
+          <p class="eyebrow">Project Info</p>
+          <h2>What to expect</h2>
+          {data.projectInfo.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <aside class="surface cta-box">
+          <h2>Talk with Andrew</h2>
+          <p>
+            Share the room, current floor, and what you want installed. Red Rock can schedule
+            a measure and bid from there.
+          </p>
+          <div class="button-row">
+            <a class="button" href={site.phoneHref}>{site.phoneDisplay}</a>
+            <a class="button-secondary" href="/contact/">Contact page</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .service-hero {
+    padding-bottom: var(--space-6);
+  }
+
+  .lead-copy {
+    max-width: 740px;
+    color: var(--color-muted);
+    font-size: var(--step-1);
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: var(--space-4);
+  }
+
+  .detail-block,
+  .cta-box {
+    padding: var(--space-4);
+  }
+
+  .detail-block h2,
+  .cta-box h2 {
+    font-size: var(--step-3);
+  }
+
+  li + li {
+    margin-top: 0.55rem;
+  }
+
+  .photo-grid {
+    margin-top: var(--space-4);
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import { absoluteUrl, site } from '@data/site';
+
+interface Rating {
+  ratingValue: number;
+  reviewCount: number;
+}
+
+interface Props {
+  aggregateRating?: Rating;
+}
+
+const { aggregateRating } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${site.baseUrl}/#business`,
+  name: site.name,
+  image: absoluteUrl(site.logoPath),
+  url: `${site.baseUrl}/`,
+  telephone: site.phoneE164,
+  email: site.email,
+  priceRange: site.priceRange,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country
+  },
+  areaServed: site.serviceAreaCities.map((city) => ({
+    '@type': 'City',
+    name: city
+  })),
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: site.hours.days,
+      opens: site.hours.opens,
+      closes: site.hours.closes
+    }
+  ],
+  sameAs: [site.social.facebook, site.social.instagram],
+  ...(aggregateRating ? { aggregateRating } : {})
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)}></script>

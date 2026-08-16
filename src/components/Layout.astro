@@ -1,0 +1,35 @@
+---
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import MetaTags from '@components/MetaTags.astro';
+import SchemaLocalBusiness from '@components/SchemaLocalBusiness.astro';
+import '@styles/tokens.css';
+import '@styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogImage?: string;
+}
+
+const { title, description, canonicalPath, ogImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <MetaTags title={title} description={description} canonicalPath={canonicalPath} ogImage={ogImage} />
+    <SchemaLocalBusiness />
+  </head>
+  <body>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

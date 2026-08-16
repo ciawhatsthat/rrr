@@ -1,0 +1,35 @@
+---
+import { absoluteUrl, site } from '@data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogImage?: string;
+  type?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage = site.ogImagePath,
+  type = 'website'
+} = Astro.props;
+
+const canonicalUrl = absoluteUrl(canonicalPath);
+const ogImageUrl = absoluteUrl(ogImage);
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:type" content={type} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
