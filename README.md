@@ -30,11 +30,10 @@ One-time setup in the GitHub repo: **Settings → Pages → Source: GitHub Actio
 3. Update the `Sitemap:` line in `public/robots.txt`.
 4. Point DNS at GitHub Pages, set the custom domain in Settings → Pages, enable "Enforce HTTPS".
 
-## Private pages
+## Photo review app (for Andrew)
 
-- `/photo-review/` — photo picker for Andrew. Noindex, not in the sitemap, not linked from nav.
-  Photos come from `public/review/` (web-sized copies of the old site's photos, generated from
-  `old-site/images/`, which is gitignored and produced by `scripts/scrape-old-site.mjs`).
+`review-app/` is a separate zero-dependency Node app, kept **out of git** (gitignored) and pushed
+by hand to a DigitalOcean droplet for a one-time review. See `review-app/README.md` locally.
 
 ## Content
 

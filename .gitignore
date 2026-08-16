@@ -13,3 +13,6 @@ rrr.html
 old/*
 # Scraped copy of the old Webador site (photos + copy for migration)
 old-site/
+
+# Photo review app for Andrew: local only, deployed by hand to DigitalOcean (see review-app/README.md)
+review-app/

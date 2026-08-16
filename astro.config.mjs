@@ -11,9 +11,5 @@ export default defineConfig({
   site: SITE_URL,
   base: SITE_BASE,
   output: 'static',
-  integrations: [
-    sitemap({
-      filter: (page) => !page.includes('/photo-review')
-    })
-  ]
+  integrations: [sitemap()]
 });
