@@ -8,11 +8,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Old Webador site export kept locally for reference only
-rrr.html
 *.tmp
-# Scraped copy of the old Webador site (photos + copy for migration)
-old-site/
 
-# Photo review app for Andrew: local only, deployed by hand to DigitalOcean (see review-app/README.md)
-review-app/
+# Local-only archive: old Webador site scrape, Andrew's original photos + emails, the
+# one-time DO photo-review app and his saved picks. Not part of the site. See archive/README.md
+archive/
+rrr.html
