@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
-import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import Photo from '@components/Photo.astro';
+import ProjectStory from '@components/ProjectStory.astro';
 import { site, withBase } from '@data/site';
 
 export async function getStaticPaths() {
@@ -14,6 +15,11 @@ export async function getStaticPaths() {
 
 const { service } = Astro.props;
 const data = service.data;
+const allProjects = await getCollection('projects');
+const related = data.relatedProjects
+  .map((id) => allProjects.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => !!p);
+const hero = data.photos[0];
 ---
 
 <Layout title={data.seoTitle} description={data.metaDescription} canonicalPath={`/services/${service.id}/`}>
@@ -29,13 +35,7 @@ const data = service.data;
             <a class="button-secondary" href={withBase('/contact/')}>Request a measure</a>
           </div>
         </div>
-        <PhotoPlaceholder
-          label={`${data.title} hero`}
-          detail="Finished install photo"
-          data-replace={data.photoSlots[0]['data-replace']}
-          alt={data.photoSlots[0].alt}
-          aspect={data.photoSlots[0].aspect}
-        />
+        <Photo src={hero.src} alt={hero.alt} aspect="4 / 5" priority />
       </div>
     </section>
 
@@ -59,20 +59,20 @@ const data = service.data;
     <section class="section section--white">
       <div class="container">
         <p class="eyebrow">Recent Work</p>
-        <h2>{data.title} project photos</h2>
+        <h2>{data.title} photos from our jobs</h2>
         <div class="grid photo-grid">
-          {
-            data.photoSlots.map((slot) => (
-              <PhotoPlaceholder
-                label={slot.label}
-                detail="Replace with real project photo"
-                data-replace={slot['data-replace']}
-                alt={slot.alt}
-                aspect={slot.aspect ?? '4 / 3'}
-              />
-            ))
-          }
+          {data.photos.map((p) => <Photo src={p.src} alt={p.alt} caption={p.caption} aspect="4 / 3" />)}
         </div>
+        {
+          related.length > 0 && (
+            <div class="related-projects">
+              <h3>The full story on {related.length === 1 ? 'a recent job' : 'recent jobs'}</h3>
+              {related.map((p, i) => (
+                <ProjectStory project={p} compact reverse={i % 2 === 1} headingLevel="h3" />
+              ))}
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -100,6 +100,14 @@ const data = service.data;
 </Layout>
 
 <style>
+  .related-projects {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+  .related-projects > h3 {
+    margin-bottom: calc(-1 * var(--space-3));
+  }
   .service-hero {
     padding-bottom: var(--space-6);
   }

@@ -1,0 +1,136 @@
+---
+/**
+ * One real project: title, city, Andrew's story, and its photos.
+ * `compact` = 1 photo + summary (home / service / city pages). Full = story + all photos (portfolio).
+ */
+import type { CollectionEntry } from 'astro:content';
+import Photo from '@components/Photo.astro';
+import { withBase } from '@data/site';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  compact?: boolean;
+  reverse?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { project, compact = false, reverse = false, headingLevel = 'h2' } = Astro.props;
+const d = project.data;
+const Heading = headingLevel;
+const lead = d.photos.find((p) => p.stage === 'after') ?? d.photos[0];
+const rest = d.photos.filter((p) => p !== lead);
+const categoryLabel: Record<string, string> = {
+  lvp: 'Luxury Vinyl Plank',
+  hardwood: 'Hardwood',
+  tile: 'Tile',
+  stairs: 'Stairs',
+  rubber: 'Rubber Flooring',
+  prep: 'Subfloor Repair'
+};
+---
+
+{
+  compact ? (
+    <article class:list={['project project--compact', { reverse }]} id={`project-${project.id}`}>
+      <Photo src={lead.src} alt={lead.alt} aspect="4 / 3" />
+      <div class="project-copy">
+        <p class="eyebrow">
+          {categoryLabel[d.category]} · {d.city}
+        </p>
+        <Heading>{d.title}</Heading>
+        <p>{d.summary}</p>
+        <a class="button-secondary" href={withBase(`/portfolio/#project-${project.id}`)}>
+          See the whole job
+        </a>
+      </div>
+    </article>
+  ) : (
+    <article class="project project--full" id={`project-${project.id}`}>
+      <header class="project-head">
+        <p class="eyebrow">
+          {categoryLabel[d.category]} · {d.city}
+        </p>
+        <Heading>{d.title}</Heading>
+        {d.story.map((paragraph) => (
+          <p class="story">{paragraph}</p>
+        ))}
+      </header>
+      <div class="project-photos">
+        <Photo
+          src={lead.src}
+          alt={lead.alt}
+          caption={lead.caption}
+          aspect="4 / 3"
+          class="lead-photo"
+          sizes="(min-width: 1200px) 760px, (min-width: 760px) 66vw, 100vw"
+        />
+        {rest.map((p) => (
+          <Photo
+            src={p.src}
+            alt={p.alt}
+            caption={p.caption ?? (p.stage === 'before' ? 'Before.' : p.stage === 'during' ? 'In progress.' : undefined)}
+            aspect="4 / 3"
+            sizes="(min-width: 1200px) 370px, (min-width: 760px) 33vw, 50vw"
+          />
+        ))}
+      </div>
+    </article>
+  )
+}
+
+<style>
+  .project--compact {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  @media (min-width: 760px) {
+    .project--compact {
+      grid-template-columns: 1fr 1fr;
+    }
+    .project--compact.reverse :global(.photo) {
+      order: 2;
+    }
+  }
+  .project-copy h2,
+  .project-copy h3 {
+    margin-bottom: var(--space-2);
+  }
+  .project-copy p:not(.eyebrow) {
+    color: var(--color-muted);
+  }
+
+  .project--full {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-line);
+  }
+  .project--full:first-of-type {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .project-head {
+    max-width: 760px;
+    margin-bottom: var(--space-4);
+  }
+  .story {
+    color: var(--color-ink);
+    font-size: var(--step-1);
+  }
+  .project-photos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .project-photos :global(.lead-photo) {
+    grid-column: 1 / -1;
+  }
+  @media (min-width: 760px) {
+    .project-photos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .project-photos :global(.lead-photo) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+  }
+</style>

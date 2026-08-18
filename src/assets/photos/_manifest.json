@@ -1,0 +1,368 @@
+{
+ "hero-herringbone-lvp": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/1000000926-high.jpg",
+  "kb": 347
+ },
+ "about-andrew-trevor": {
+  "w": 1800,
+  "h": 830,
+  "src": "old-site/images/andrew-2026-08-18/1000002210.jpg",
+  "kb": 202
+ },
+ "bath-before-old-tile": {
+  "w": 1080,
+  "h": 1459,
+  "src": "old-site/images/1000001113-high-viuuaa.png",
+  "kb": 248
+ },
+ "bath-before-rotten-subfloor": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/1000001059-high-o17zfc.jpg",
+  "kb": 470
+ },
+ "bath-before-subfloor-cutout": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/1000001060-high-ljq2v5.jpg",
+  "kb": 377
+ },
+ "bath-after-lvp": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/1000001100-high-qn545m.jpg",
+  "kb": 293
+ },
+ "weight-room-before-concrete": {
+  "w": 1080,
+  "h": 1468,
+  "src": "old-site/images/1000001112-high-sqq9eb.png",
+  "kb": 192
+ },
+ "weight-room-rubber-floor": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/1000001111-high-ssicor.jpg",
+  "kb": 430
+ },
+ "weight-room-rubber-floor-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/1000001110-high-t1bdze.jpg",
+  "kb": 608
+ },
+ "hardwood-maple-room": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230121_144159902-1.jpg",
+  "kb": 231
+ },
+ "hardwood-maple-room-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230121_144233059-1.jpg",
+  "kb": 288
+ },
+ "hardwood-post-detail": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230624_184029039.jpg",
+  "kb": 249
+ },
+ "hardwood-hickory-hallway": {
+  "w": 1350,
+  "h": 1800,
+  "src": "old-site/images/20220817_183614.jpg",
+  "kb": 208
+ },
+ "hardwood-hickory-kitchen": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230624_184135874-1.jpg",
+  "kb": 278
+ },
+ "hardwood-hickory-kitchen-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230624_184146680-1.jpg",
+  "kb": 235
+ },
+ "hardwood-wide-plank-church": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20220914_142444541-1.jpg",
+  "kb": 182
+ },
+ "hardwood-wide-plank-church-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20220914_142429114-1.jpg",
+  "kb": 270
+ },
+ "hardwood-longmont-kitchen": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001143.jpg",
+  "kb": 443
+ },
+ "hardwood-longmont-living": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001142.jpg",
+  "kb": 417
+ },
+ "hardwood-longmont-island": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001141.jpg",
+  "kb": 441
+ },
+ "hardwood-longmont-entry": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001145.jpg",
+  "kb": 229
+ },
+ "prep-longmont-furniture-covered": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001147.jpg",
+  "kb": 263
+ },
+ "prep-longmont-furniture-covered-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001149.jpg",
+  "kb": 226
+ },
+ "engineered-pine-living": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002323.jpg",
+  "kb": 299
+ },
+ "engineered-pine-bedroom": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002322.jpg",
+  "kb": 207
+ },
+ "engineered-pine-hallway": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002324.jpg",
+  "kb": 263
+ },
+ "engineered-pine-hall-bath": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002327.jpg",
+  "kb": 282
+ },
+ "engineered-pine-room": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002329.jpg",
+  "kb": 346
+ },
+ "lvp-grey-fireplace": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20221026_164337992-1.jpg",
+  "kb": 190
+ },
+ "lvp-grey-kitchen": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20221026_164231542-1.jpg",
+  "kb": 274
+ },
+ "lvp-grey-basement": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230128_181029254-1.jpg",
+  "kb": 225
+ },
+ "lvp-grey-hallway": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231026_171517779-1.jpg",
+  "kb": 283
+ },
+ "lvp-light-living": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230907_141958615.jpg",
+  "kb": 226
+ },
+ "lvp-light-kitchen": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230907_142317009-1.jpg",
+  "kb": 221
+ },
+ "lvp-aurora-basement": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002049.jpg",
+  "kb": 297
+ },
+ "lvp-aurora-basement-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002050.jpg",
+  "kb": 288
+ },
+ "lvp-aurora-room": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002045.jpg",
+  "kb": 204
+ },
+ "lvp-aurora-stairs": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002047.jpg",
+  "kb": 273
+ },
+ "lvp-aurora-hallway": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002046.jpg",
+  "kb": 224
+ },
+ "prep-aurora-leveler": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001997.jpg",
+  "kb": 127
+ },
+ "prep-aurora-vapor-barrier": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002014.jpg",
+  "kb": 267
+ },
+ "prep-aurora-vapor-barrier-stairs": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000002012.jpg",
+  "kb": 352
+ },
+ "lvp-denver-highrise-living": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001506.jpg",
+  "kb": 298
+ },
+ "lvp-denver-highrise-living-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001503.jpg",
+  "kb": 211
+ },
+ "lvp-denver-highrise-kitchen": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001507.jpg",
+  "kb": 217
+ },
+ "lvp-denver-highrise-hall": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001511.jpg",
+  "kb": 437
+ },
+ "prep-denver-highrise-leveler": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001467.jpg",
+  "kb": 130
+ },
+ "prep-denver-highrise-leveler-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/andrew-2026-08-18/1000001465.jpg",
+  "kb": 148
+ },
+ "laminate-dark-room": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230502_175504602-1.jpg",
+  "kb": 248
+ },
+ "laminate-dark-hallway": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230502_175448271-1.jpg",
+  "kb": 259
+ },
+ "tile-dining-room": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231113_201215218.jpg",
+  "kb": 234
+ },
+ "tile-entry": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231113_201138781.jpg",
+  "kb": 259
+ },
+ "tile-entry-stair-edge": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231113_201112207-1.jpg",
+  "kb": 312
+ },
+ "tile-boulder-room": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231113_201223747-1.jpg",
+  "kb": 237
+ },
+ "tile-hex-bath": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230410_163111622.jpg",
+  "kb": 319
+ },
+ "tile-hex-bath-2": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230410_163054626.jpg",
+  "kb": 324
+ },
+ "stairs-light-oak": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230620_151436095-1.jpg",
+  "kb": 220
+ },
+ "stairs-light-oak-nosing": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20230620_151418193-1.jpg",
+  "kb": 170
+ },
+ "stairs-lvp-grey": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231108_092937138-1.jpg",
+  "kb": 282
+ },
+ "stairs-lvp-longmont": {
+  "w": 1355,
+  "h": 1800,
+  "src": "old-site/images/img_20231108_092840316-1.jpg",
+  "kb": 270
+ },
+ "stairs-hickory-landing": {
+  "w": 1350,
+  "h": 1800,
+  "src": "old-site/images/20220817_183614.jpg",
+  "kb": 208
+ }
+}

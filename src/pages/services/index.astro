@@ -4,9 +4,11 @@ import Layout from '@components/Layout.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
-const title = 'Flooring Services - Hardwood, LVP, Tile, Carpet | Red Rock Remodeling';
+import { site } from '@data/site';
+
+const title = 'Flooring Services - LVP, Hardwood, Tile, Stairs | Red Rock Remodeling';
 const description =
-  'Compare flooring services from Red Rock Remodeling: hardwood, LVP, tile, carpet, and stairs installed across Berthoud and Northern Colorado.';
+  'Flooring services from Red Rock Remodeling: luxury vinyl plank, hardwood, laminate, tile, stairs, rubber, and subfloor leveling across Denver and Northern CO.';
 ---
 
 <Layout title={title} description={description} canonicalPath="/services/">
@@ -15,8 +17,9 @@ const description =
       <p class="eyebrow">Services</p>
       <h1>Flooring Services</h1>
       <p class="lead">
-        Red Rock Remodeling installs flooring across the Front Range, with the tear-out,
-        subfloor prep, trim, and transition details that make the finished floor work.
+        Andrew and Trevor install the floor and everything under it: tear-out, subfloor repair and
+        leveling, vapor barrier, the floor itself, transitions, and base. Luxury vinyl plank is what
+        we do most. Hardwood is what we have done longest.
       </p>
     </div>
   </section>
@@ -30,18 +33,18 @@ const description =
               title={service.data.title}
               description={service.data.shortDescription}
               href={`/services/${service.id}/`}
-              data-replace={service.data['card-data-replace']}
+              image={service.data.cardImage}
               alt={service.data.cardAlt}
             />
           ))
         }
       </div>
       <div class="related surface">
-        <h2>Related flooring work</h2>
+        <h2>Also on request</h2>
         <p>
-          Engineered hardwood, laminate, sheet vinyl, rubber flooring, tear-out, subfloor repair,
-          transitions, and base work can be included when they fit the project. The first step is
-          a measure and a practical conversation about the room.
+          We install {site.alsoOnRequest.join(' and ').toLowerCase()} too, usually as part of a bigger job.
+          We do not sand and refinish existing hardwood. If that is what you need, we will say so and point you
+          the right way. First step for anything is a measure and a plain conversation about the room.
         </p>
       </div>
     </div>

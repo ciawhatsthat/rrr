@@ -1,12 +1,13 @@
 ---
 import Layout from '@components/Layout.astro';
 import ContactForm from '@components/ContactForm.astro';
-import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import Photo from '@components/Photo.astro';
+import contactPhoto from '@assets/photos/lvp-grey-basement.jpg';
 import { site, withBase } from '@data/site';
 
 const title = 'Contact Red Rock Remodeling - Flooring Contractor in Berthoud, CO';
 const description =
-  'Contact Red Rock Remodeling, a flooring contractor in Berthoud, CO, for hardwood, LVP, tile, carpet, and stair installation estimates. Call Andrew today.';
+  'Contact Red Rock Remodeling, flooring contractor in Berthoud, CO, for LVP, hardwood, tile, and stair bids across the Front Range. Call or text Andrew.';
 ---
 
 <Layout title={title} description={description} canonicalPath="/contact/">
@@ -21,13 +22,7 @@ const description =
         </p>
         <a class="phone-hero" href={site.phoneHref}>{site.phoneDisplay}</a>
       </div>
-      <PhotoPlaceholder
-        label="Contact photo"
-        detail="Finished project or Andrew on site"
-        data-replace="CONTACT: finished flooring project or Andrew jobsite portrait"
-        alt="Red Rock Remodeling contact page project photo"
-        aspect="4 / 3"
-      />
+      <Photo src={contactPhoto} alt="Grey luxury vinyl plank floor in a finished basement family room" aspect="4 / 3" priority />
     </div>
   </section>
 

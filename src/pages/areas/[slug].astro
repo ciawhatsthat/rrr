@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
-import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import Photo from '@components/Photo.astro';
+import ProjectStory from '@components/ProjectStory.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import { site, withBase } from '@data/site';
 
@@ -15,37 +16,51 @@ export async function getStaticPaths() {
 
 const { location } = Astro.props;
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const allProjects = await getCollection('projects');
 const data = location.data;
-const todoComment = `<!-- ${data.localNote} -->`;
+const related = data.relatedProjects
+  .map((id) => allProjects.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => !!p);
+const hero = data.photos[0];
+const todoComment = data.localNote ? `<!-- ${data.localNote} -->` : '';
 ---
 
 <Layout title={data.seoTitle} description={data.metaDescription} canonicalPath={`/areas/${location.id}/`}>
-  <Fragment set:html={todoComment} />
+  {todoComment && <Fragment set:html={todoComment} />}
   <section class="section section--white location-hero">
     <div class="container two-column">
       <div>
         <p class="eyebrow">Service Area</p>
         <h1>Flooring Contractor in {data.city}, CO</h1>
         <p class="lead">{data.intro}</p>
+        {data.local.map((paragraph) => <p>{paragraph}</p>)}
         <div class="button-row">
           <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
           <a class="button-secondary" href={withBase('/contact/')}>Request a measure</a>
         </div>
       </div>
-      <PhotoPlaceholder
-        label={`${data.city} flooring`}
-        detail="Local project photo placeholder"
-        data-replace={data.photoSlots[0]['data-replace']}
-        alt={data.photoSlots[0].alt}
-        aspect={data.photoSlots[0].aspect}
-      />
+      <Photo src={hero.src} alt={hero.alt} aspect="4 / 5" priority />
     </div>
   </section>
 
-  <section class="section section--soft">
+  {
+    related.length > 0 && (
+      <section class="section section--soft">
+        <div class="container related">
+          <p class="eyebrow">A {data.city} Job</p>
+          <h2>What a job here actually looked like</h2>
+          {related.map((p) => (
+            <ProjectStory project={p} compact headingLevel="h3" />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class:list={['section', related.length ? 'section--white' : 'section--soft']}>
     <div class="container">
       <p class="eyebrow">Services</p>
-      <h2>Flooring services in {data.city}</h2>
+      <h2>Flooring we install in {data.city}</h2>
       <div class="grid services-list">
         {
           services.map((service) => (
@@ -53,7 +68,7 @@ const todoComment = `<!-- ${data.localNote} -->`;
               title={service.data.title}
               description={service.data.shortDescription}
               href={`/services/${service.id}/`}
-              data-replace={service.data['card-data-replace']}
+              image={service.data.cardImage}
               alt={service.data.cardAlt}
             />
           ))
@@ -62,34 +77,30 @@ const todoComment = `<!-- ${data.localNote} -->`;
     </div>
   </section>
 
-  <section class="section section--white">
-    <div class="container">
-      <p class="eyebrow">Recent Work</p>
-      <h2>Selected {data.city} project photos</h2>
-      <div class="grid local-photos">
-        {
-          data.photoSlots.map((slot) => (
-            <PhotoPlaceholder
-              label={slot.label}
-              detail="Replace with local project photo"
-              data-replace={slot['data-replace']}
-              alt={slot.alt}
-              aspect={slot.aspect ?? '4 / 3'}
-            />
-          ))
-        }
-      </div>
-    </div>
-  </section>
+  {
+    data.photos.length > 1 && (
+      <section class:list={['section', related.length ? 'section--soft' : 'section--white']}>
+        <div class="container">
+          <p class="eyebrow">Recent Work</p>
+          <h2>From our {data.city} jobs</h2>
+          <div class="grid local-photos">
+            {data.photos.slice(1).map((p) => (
+              <Photo src={p.src} alt={p.alt} caption={p.caption} aspect="4 / 3" />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
-  <section class="section section--soft">
+  <section class="section contact-band">
     <div class="container cta-row">
       <div>
         <p class="eyebrow">Measure And Bid</p>
         <h2>Planning a floor in {data.city}?</h2>
         <p>
-          Call or text Andrew with the flooring type, room size, and what needs to come out.
-          Red Rock Remodeling can schedule a measure and talk through the right next step.
+          Call or text Andrew with the flooring type, room size, and what needs to come out. He will
+          schedule a measure and give you a written bid.
         </p>
       </div>
       <a class="button" href={site.phoneHref}>{site.phoneDisplay}</a>
@@ -101,12 +112,39 @@ const todoComment = `<!-- ${data.localNote} -->`;
   .location-hero {
     padding-bottom: var(--space-6);
   }
-
+  .location-hero .lead + p {
+    color: var(--color-ink);
+  }
+  .related {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .related > .eyebrow {
+    margin-bottom: 0;
+  }
+  .related > h2 {
+    margin-top: calc(-1 * var(--space-5) + var(--space-2));
+  }
   .services-list,
   .local-photos {
     margin-top: var(--space-4);
   }
-
+  .contact-band {
+    background: var(--color-red-rock);
+    color: var(--color-white);
+  }
+  .contact-band h2,
+  .contact-band .eyebrow {
+    color: var(--color-white);
+  }
+  .contact-band p {
+    color: rgb(255 255 255 / 0.86);
+  }
+  .contact-band .button {
+    border-color: var(--color-white);
+    background: var(--color-white);
+    color: var(--color-red-rock);
+  }
   .cta-row {
     display: flex;
     flex-wrap: wrap;
@@ -114,9 +152,7 @@ const todoComment = `<!-- ${data.localNote} -->`;
     align-items: center;
     justify-content: space-between;
   }
-
   .cta-row p {
     max-width: 720px;
-    color: var(--color-muted);
   }
 </style>

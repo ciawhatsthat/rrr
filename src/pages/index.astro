@@ -1,32 +1,49 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
-import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import Photo from '@components/Photo.astro';
+import ProjectStory from '@components/ProjectStory.astro';
 import ServiceCard from '@components/ServiceCard.astro';
 import { site, withBase } from '@data/site';
+import heroPhoto from '@assets/photos/hero-herringbone-lvp.jpg';
+import aboutPhoto from '@assets/photos/about-andrew-trevor.jpg';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = ['aurora-basement-lvp', 'bathroom-subfloor']
+  .map((id) => projects.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => !!p);
 const title = 'Flooring Contractor in Berthoud, CO | Red Rock Remodeling';
 const description =
-  'Berthoud flooring contractor installing hardwood, LVP, tile, carpet, and stairs across Northern Colorado. Call Red Rock Remodeling for a free measure.';
----
+  'Berthoud flooring contractor installing LVP, hardwood, tile, and stairs across Denver and Northern Colorado, subfloor work done right. Call Andrew for a bid.';
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: site.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+};
+---
 <Layout title={title} description={description} canonicalPath="/">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="hero">
-    <PhotoPlaceholder
+    <Photo
       class="hero-image"
-      label="Flooring hero"
-      detail="Finished install, wide landscape photo"
-      data-replace="HOME: hero, best finished flooring project, landscape"
-      alt="Finished flooring project by Red Rock Remodeling"
-      aspect="16 / 9"
+      src={heroPhoto}
+      alt="Herringbone luxury vinyl plank floor in a Berthoud living room with a stone fireplace"
+      sizes="100vw"
+      priority
     />
     <div class="hero-content container">
-      <p class="eyebrow">Berthoud, Colorado</p>
+      <p class="eyebrow">Berthoud, Colorado · Front Range</p>
       <h1>Flooring Contractor in Berthoud, CO</h1>
       <p>
-        Red Rock Remodeling installs hardwood, LVP, tile, carpet, and stairs across the
-        Front Range with 30+ years of practical flooring experience.
+        Luxury vinyl plank, hardwood, tile, and stairs, installed by Andrew and Trevor Willenbring.
+        30 years of floors across Denver and Northern Colorado, and the subfloor work done right
+        before a single plank goes down.
       </p>
       <div class="button-row">
         <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
@@ -40,8 +57,8 @@ const description =
       <p class="eyebrow">Services</p>
       <h2>Floors built for the way the room is used</h2>
       <p class="lead">
-        From tear-out and subfloor repair to trim and transitions, the details under and around
-        the finished floor are part of the job.
+        LVP is what we do most. Hardwood is what we have done longest. Either way the job includes
+        the tear-out, the subfloor, the transitions, and the base, not just the planks.
       </p>
       <div class="grid service-grid">
         {
@@ -50,7 +67,7 @@ const description =
               title={service.data.title}
               description={service.data.shortDescription}
               href={`/services/${service.id}/`}
-              data-replace={service.data['card-data-replace']}
+              image={service.data.cardImage}
               alt={service.data.cardAlt}
             />
           ))
@@ -63,51 +80,34 @@ const description =
     <div class="container two-column">
       <div>
         <p class="eyebrow">About Red Rock</p>
-        <h2>Berthoud-based, flooring-focused</h2>
+        <h2>Father and son. Thirty years of floors.</h2>
         <p>
-          Andrew has more than 30 years of flooring experience and works from Berthoud across
-          Northern Colorado. Red Rock handles laminate, engineered wood, LVP, sheet vinyl,
-          ceramic tile, and new construction flooring projects, with the focus where it belongs:
-          floors.
+          Red Rock Remodeling is Andrew Willenbring and his son Trevor. Andrew has installed floors
+          across the Denver metro for 30 years; the shop is in Berthoud and the work runs from Fort
+          Collins down to Castle Rock. Two people bid the job, and the same two people install it.
         </p>
         <p>
-          That means plain bids, practical material conversations, tear-out when needed, subfloor
-          prep when the room calls for it, and trim details that make the finished floor look done.
+          That means a plain written bid, honest talk about materials, and the parts you do not see
+          done properly: tear-out, leveling, vapor barrier, rotten subfloor cut out and replaced,
+          base pulled and reinstalled. Licensed and insured.
         </p>
       </div>
-      <PhotoPlaceholder
-        label="About photo"
-        detail="Andrew or crew working on flooring"
-        data-replace="ABOUT: Andrew or crew installing flooring, jobsite photo"
-        alt="Red Rock Remodeling working on a flooring installation"
-        aspect="4 / 3"
+      <Photo
+        src={aboutPhoto}
+        alt="Andrew Willenbring (left) and his son Trevor Willenbring (right), owners of Red Rock Remodeling, standing on a herringbone floor with the company logo"
+        caption="Andrew (left) and Trevor Willenbring."
       />
     </div>
   </section>
 
   <section class="section section--white">
-    <div class="container two-column project-feature">
-      <PhotoPlaceholder
-        label="Before-after"
-        detail="Bathroom subfloor repair and LVP"
-        data-replace="FEATURED PROJECT: bathroom tile tear-out, rotten subfloor repair, new LVP, toilet reinstall, wood base"
-        alt="Bathroom flooring project with subfloor repair and new LVP"
-        aspect="4 / 3"
-      />
-      <div>
-        <p class="eyebrow">Featured Project</p>
-        <h2>A bathroom floor that needed more than new planks</h2>
-        <p>
-          On one bathroom redo, Red Rock removed the old tile and toilet, then found moldy,
-          rotten subfloor underneath. Andrew cut out the bad subfloor, installed new LVP,
-          reinstalled the toilet, and finished the room with new wood base.
-        </p>
-        <p>
-          It is a good example of why flooring is not just the surface you see. Prep and repair
-          are what keep the finished floor solid.
-        </p>
-        <a class="button-secondary" href={withBase('/portfolio/')}>View portfolio</a>
-      </div>
+    <div class="container featured">
+      <p class="eyebrow">Recent Jobs</p>
+      <h2>What the work actually looks like</h2>
+      {featured.map((p, i) => <ProjectStory project={p} compact reverse={i % 2 === 1} headingLevel="h3" />)}
+      <p class="featured-more">
+        <a class="button-secondary" href={withBase('/portfolio/')}>All jobs and photos</a>
+      </p>
     </div>
   </section>
 
@@ -115,17 +115,17 @@ const description =
     <div class="container service-area">
       <div>
         <p class="eyebrow">Service Area</p>
-        <h2>Front Range flooring work from Fort Collins to Castle Rock</h2>
+        <h2>Fort Collins to Castle Rock, and all of Denver in between</h2>
         <p class="lead">
-          Red Rock Remodeling is based in Berthoud and serves homeowners across the Front Range,
-          from Fort Collins down to Castle Rock. Don't see your city below? Call us.
+          Based in Berthoud. Thirty years of jobs across the Denver metro. Houses, condos, high-rises,
+          basements, and mountain homes. Do not see your town below? Call and ask.
         </p>
       </div>
       <div class="area-panel" aria-label="Service area cities">
         <div class="range-line" aria-hidden="true">
           <span>Fort Collins</span>
           <span>Berthoud</span>
-          <span>Boulder</span>
+          <span>Denver</span>
           <span>Castle Rock</span>
         </div>
         <div class="area-links" aria-label="Location pages">
@@ -142,14 +142,31 @@ const description =
     </div>
   </section>
 
+  <section class="section section--white">
+    <div class="container faq">
+      <p class="eyebrow">Straight Answers</p>
+      <h2>Questions people ask</h2>
+      <dl>
+        {
+          site.faq.map((f) => (
+            <div class="faq-item">
+              <dt>{f.q}</dt>
+              <dd>{f.a}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
   <section class="section contact-band">
     <div class="container contact-band-inner">
       <div>
         <p class="eyebrow">Ready To Talk Floors?</p>
-        <h2>Schedule a free consultation</h2>
+        <h2>Get a measure and a written bid</h2>
         <p>
-          Call or text Andrew with the room, flooring type, and what you want changed. He can
-          schedule a measure and bid from there.
+          Call or text Andrew with the room, the flooring you are thinking about, and what has to come
+          out. He will set up a time to measure and give you a straight number.
         </p>
       </div>
       <div class="button-row">
@@ -183,11 +200,11 @@ const description =
     inset: 0;
     width: 100%;
     height: 100%;
-    border: 0;
     border-radius: 0;
     aspect-ratio: auto;
-    place-items: start end;
-    padding: var(--space-3);
+  }
+  .hero :global(.hero-image img) {
+    object-position: center 70%;
   }
 
   .hero-content {
@@ -222,8 +239,38 @@ const description =
     margin-top: var(--space-5);
   }
 
-  .project-feature {
-    align-items: center;
+  .featured {
+    display: grid;
+    gap: var(--space-6);
+  }
+  .featured > .eyebrow {
+    margin-bottom: 0;
+  }
+  .featured > h2 {
+    margin-top: calc(-1 * var(--space-6) + var(--space-2));
+  }
+  .featured-more {
+    margin: 0;
+  }
+  .faq dl {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+    max-width: 820px;
+  }
+  .faq-item {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    background: var(--color-paper);
+  }
+  .faq dt {
+    margin-bottom: 0.3rem;
+    font-weight: 800;
+  }
+  .faq dd {
+    margin: 0;
+    color: var(--color-muted);
   }
 
   .service-area {

@@ -2,20 +2,15 @@
 order: 5
 city: "Fort Collins"
 seoTitle: "Flooring Contractor in Fort Collins, CO | Red Rock Remodeling"
-metaDescription: "Flooring contractor in Fort Collins, CO installing hardwood, LVP, tile, carpet, and stairs across Northern Colorado homes. Call Andrew for a measure."
-intro: "Red Rock Remodeling installs flooring for Fort Collins homeowners and nearby Front Range communities. Andrew brings more than 30 years of flooring experience to hardwood, LVP, tile, carpet, stairs, subfloor work, and trim."
-localNote: "TODO: get specifics from AJ for Fort Collins neighborhoods, recent jobs, and city-specific portfolio photos."
-photoSlots:
-  - label: "Fort Collins project"
-    "data-replace": "FORT COLLINS: local flooring project, finished install, landscape"
-    alt: "Finished flooring project in Fort Collins Colorado"
-    aspect: "16 / 10"
-  - label: "Fort Collins detail"
-    "data-replace": "FORT COLLINS: local project detail or before-after"
-    alt: "Detail from a Fort Collins flooring project"
-    aspect: "4 / 3"
-  - label: "Fort Collins before-after"
-    "data-replace": "FORT COLLINS: before-after flooring project, local portfolio slot"
-    alt: "Before and after flooring project in Fort Collins Colorado"
-    aspect: "4 / 3"
+metaDescription: "Flooring contractor in Fort Collins, CO installing hardwood, LVP, tile, and stairs across Northern Colorado with real subfloor prep. Call Andrew for a bid."
+intro: "Fort Collins is the north end of our regular range. Andrew and Trevor install luxury vinyl plank, hardwood, laminate, tile, and stairs for Fort Collins homeowners, tear-out and subfloor prep included."
+local:
+  []
+localNote: "TODO: get Fort Collins specifics from Andrew."
+photos:
+  - src: "../../assets/photos/hardwood-wide-plank-church.jpg"
+    alt: "Wide-plank hardwood in a large open room in Fort Collins"
+  - src: "../../assets/photos/hardwood-wide-plank-church-2.jpg"
+    alt: "Wide-plank hardwood floor with a stone wall"
+relatedProjects: []
 ---

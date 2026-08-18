@@ -10,7 +10,7 @@ pnpm-debug.log*
 
 # Old Webador site export kept locally for reference only
 rrr.html
-old/*
+*.tmp
 # Scraped copy of the old Webador site (photos + copy for migration)
 old-site/
 

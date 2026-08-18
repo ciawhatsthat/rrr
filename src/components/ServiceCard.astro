@@ -1,27 +1,21 @@
 ---
+import type { ImageMetadata } from 'astro';
 import { withBase } from '@data/site';
-import PhotoPlaceholder from '@components/PhotoPlaceholder.astro';
+import Photo from '@components/Photo.astro';
 
 interface Props {
   title: string;
   description: string;
   href: string;
-  'data-replace': string;
+  image: ImageMetadata;
   alt: string;
 }
 
-const { title, description, href, alt } = Astro.props;
-const dataReplace = Astro.props['data-replace'];
+const { title, description, href, image, alt } = Astro.props;
 ---
 
 <article class="service-card">
-  <PhotoPlaceholder
-    label={title}
-    detail="Service photo placeholder"
-    data-replace={dataReplace}
-    alt={alt}
-    aspect="4 / 3"
-  />
+  <Photo src={image} alt={alt} aspect="4 / 3" sizes="(min-width: 1200px) 360px, (min-width: 760px) 33vw, 100vw" />
   <div class="service-card-body">
     <h3><a href={withBase(href)}>{title}</a></h3>
     <p>{description}</p>
@@ -38,8 +32,7 @@ const dataReplace = Astro.props['data-replace'];
     background: var(--color-white);
   }
 
-  .service-card :global(.photo-placeholder) {
-    border: 0;
+  .service-card :global(.photo) {
     border-bottom: 1px solid var(--color-line);
     border-radius: 0;
   }

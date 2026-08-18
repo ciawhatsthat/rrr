@@ -45,11 +45,20 @@ by hand to a DigitalOcean droplet for a one-time review. See `review-app/README.
 
 ## Photos
 
-All photo slots are placeholders. `grep -r "data-replace" src` lists every unfilled slot.
-Real photos go in `src/assets/photos/` and get wired through Astro's `<Image />`.
+Real photos live in `src/assets/photos/` (web-sized, semantically named; `_manifest.json` maps each
+back to its original in `old-site/`) and are referenced from content collections via Astro's
+`image()` schema helper, rendered through `src/components/Photo.astro` (Astro `<Image>`,
+responsive widths, lazy, aspect reserved). No placeholders remain.
+
+Originals: `old-site/images/` (scraped from the Webador site) and
+`old-site/images/andrew-2026-08-18/` (emailed by Andrew). Both gitignored.
 
 ## Open TODOs
 
 - Contact form posts via `mailto:` — swap for Formspree/Netlify when chosen (`src/components/ContactForm.astro`)
-- Location pages have `TODO: get specifics from AJ` notes for local copy
-- Real photo selection (Andrew)
+- Location pages: Berthoud, Loveland, Boulder, Fort Collins still have `localNote` TODOs (no local job story yet).
+  Longmont, Denver, Aurora have real ones.
+- Andrew's inline email images (Pine 1000002330/32/33, Aurora 1000002048/51-53, Longmont 1000001169-1197)
+  were not in the attachment zips; grab if wanted.
+- Real reviews → `src/content/testimonials/` (none yet; the old site's quote was fabricated and removed).
+- Custom domain cutover (see Deploy).

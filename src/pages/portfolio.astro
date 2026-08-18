@@ -1,11 +1,48 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '@components/Layout.astro';
-import PortfolioGrid from '@components/PortfolioGrid.astro';
-import { portfolioCategories, portfolioItems } from '@data/portfolio';
+import PortfolioGrid, { type GridItem } from '@components/PortfolioGrid.astro';
+import ProjectStory from '@components/ProjectStory.astro';
+import { site } from '@data/site';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+
+const label: Record<string, string> = {
+  lvp: 'LVP',
+  hardwood: 'Hardwood',
+  tile: 'Tile',
+  stairs: 'Stairs',
+  rubber: 'Rubber',
+  prep: 'Prep & Leveling',
+  laminate: 'Laminate',
+  subfloor: 'Prep & Leveling'
+};
+
+// Grid = every project photo, plus service-page photos not already in a project.
+const seen = new Set<string>();
+const items: GridItem[] = [];
+for (const p of projects) {
+  for (const ph of p.data.photos) {
+    seen.add(ph.src.src);
+    const cat = ph.stage === 'before' || ph.stage === 'during' ? 'Before & After' : label[p.data.category];
+    items.push({ src: ph.src, alt: ph.alt, caption: ph.caption, category: cat, project: p.data.title, projectId: p.id });
+  }
+}
+for (const s of services) {
+  for (const ph of s.data.photos) {
+    if (seen.has(ph.src.src)) continue;
+    seen.add(ph.src.src);
+    items.push({ src: ph.src, alt: ph.alt, caption: ph.caption, category: label[s.id] ?? s.data.title, project: s.data.title });
+  }
+}
+const categories = ['LVP', 'Hardwood', 'Laminate', 'Tile', 'Stairs', 'Rubber', 'Prep & Leveling', 'Before & After'].filter((c) =>
+  items.some((i) => i.category === c)
+);
 
 const title = 'Flooring Portfolio - Red Rock Remodeling';
 const description =
-  'View Red Rock Remodeling flooring portfolio work by category, including hardwood, LVP, tile, carpet, stairs, and before-after projects in Northern Colorado.';
+  'Real flooring jobs by Red Rock Remodeling across Denver and Northern Colorado: LVP basements, hardwood, tile, stairs, and the subfloor leveling underneath.';
 ---
 
 <Layout title={title} description={description} canonicalPath="/portfolio/">
@@ -14,15 +51,29 @@ const description =
       <p class="eyebrow">Portfolio</p>
       <h1>Flooring Portfolio</h1>
       <p class="lead">
-        Browse flooring work by category: hardwood, LVP, tile, carpet, stairs, and before-after
-        repairs. Every job here was installed by Red Rock in a Front Range home.
+        Real jobs, in Andrew's words. Every floor here was installed by Andrew and Trevor in a Front
+        Range home. Photos are from the job, not a catalog.
       </p>
     </div>
   </section>
 
   <section class="section section--soft">
+    <div class="container projects">
+      <p class="eyebrow">Recent Jobs</p>
+      <h2>Six jobs, start to finish</h2>
+      {projects.map((project) => <ProjectStory project={project} headingLevel="h3" />)}
+    </div>
+  </section>
+
+  <section class="section section--white" id="photos">
     <div class="container">
-      <PortfolioGrid items={portfolioItems} categories={portfolioCategories} />
+      <p class="eyebrow">All Photos</p>
+      <h2>Browse by floor type</h2>
+      <PortfolioGrid items={items} categories={categories} />
+      <p class="after-note">
+        Want to see something specific, like a color or a room like yours? Call or text {site.phoneDisplay} and
+        Andrew will send photos from a similar job.
+      </p>
     </div>
   </section>
 </Layout>
@@ -30,5 +81,19 @@ const description =
 <style>
   .page-hero {
     padding-bottom: var(--space-5);
+  }
+  .projects {
+    display: grid;
+    gap: var(--space-6);
+  }
+  .projects > .eyebrow {
+    margin-bottom: 0;
+  }
+  .projects > h2 {
+    margin-top: calc(-1 * var(--space-6) + var(--space-2));
+  }
+  .after-note {
+    margin-top: var(--space-5);
+    color: var(--color-muted);
   }
 </style>
