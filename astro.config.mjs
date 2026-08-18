@@ -11,5 +11,9 @@ export default defineConfig({
   site: SITE_URL,
   base: SITE_BASE,
   output: 'static',
-  integrations: [sitemap()]
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/thanks')
+    })
+  ]
 });

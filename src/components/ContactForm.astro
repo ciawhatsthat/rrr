@@ -1,9 +1,29 @@
 ---
-import { site } from '@data/site';
+import { absoluteUrl, site } from '@data/site';
+
+// Web3Forms when a key is set; plain mailto: fallback otherwise.
+const live = Boolean(site.formAccessKey);
+const action = live ? 'https://api.web3forms.com/submit' : `mailto:${site.email}`;
 ---
 
-<!-- TODO: replace mailto fallback with Formspree or another static form endpoint when chosen. -->
-<form class="contact-form" action={`mailto:${site.email}`} method="post" enctype="text/plain">
+<form
+  class="contact-form"
+  action={action}
+  method="post"
+  enctype={live ? undefined : 'text/plain'}
+>
+  {
+    live && (
+      <>
+        <input type="hidden" name="access_key" value={site.formAccessKey} />
+        <input type="hidden" name="subject" value="New flooring inquiry from red-rock-remodeling.net" />
+        <input type="hidden" name="from_name" value="Red Rock website" />
+        <input type="hidden" name="redirect" value={absoluteUrl('/thanks/')} />
+        {/* honeypot: real people never see or fill this */}
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      </>
+    )
+  }
   <div class="field">
     <label for="name">Name</label>
     <input id="name" name="name" type="text" autocomplete="name" required />
@@ -34,6 +54,9 @@ import { site } from '@data/site';
     <textarea id="message" name="message" rows="7" required></textarea>
   </div>
   <button class="button field-full" type="submit">Send project details</button>
+  <p class="field-full fine-print">
+    Or just call or text <a href={site.phoneHref}>{site.phoneDisplay}</a>. Andrew answers his own phone.
+  </p>
 </form>
 
 <style>
@@ -75,6 +98,20 @@ import { site } from '@data/site';
   button {
     justify-self: start;
     cursor: pointer;
+  }
+
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .fine-print {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--step--1);
   }
 
   @media (max-width: 640px) {

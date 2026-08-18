@@ -5,6 +5,9 @@ export const site = {
   phoneHref: 'tel:+17204299394',
   phoneE164: '+17204299394',
   email: 'ajwillenbring@gmail.com',
+  // Web3Forms access key (https://web3forms.com — free; the key is meant to be public).
+  // Blank = form falls back to mailto:. Submissions go to the email the key was created with.
+  formAccessKey: '',
   logoPath: '/logo.png',
   ogImagePath: '/og-default.png',
   priceRange: '$$',

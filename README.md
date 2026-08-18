@@ -55,7 +55,8 @@ Originals: `old-site/images/` (scraped from the Webador site) and
 
 ## Open TODOs
 
-- Contact form posts via `mailto:` — swap for Formspree/Netlify when chosen (`src/components/ContactForm.astro`)
+- Contact form: set `formAccessKey` in `src/data/site.ts` to the Web3Forms key (get one at web3forms.com with the
+  email that should receive leads). Until then it falls back to `mailto:`. Submissions redirect to `/thanks/`.
 - Location pages: Berthoud, Loveland, Boulder, Fort Collins still have `localNote` TODOs (no local job story yet).
   Longmont, Denver, Aurora have real ones.
 - Andrew's inline email images (Pine 1000002330/32/33, Aurora 1000002048/51-53, Longmont 1000001169-1197)

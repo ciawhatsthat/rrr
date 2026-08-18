@@ -1,0 +1,33 @@
+---
+import Layout from '@components/Layout.astro';
+import { site, withBase } from '@data/site';
+---
+
+<Layout
+  title="Thanks - Red Rock Remodeling"
+  description="Thanks for reaching out to Red Rock Remodeling. Andrew will get back to you about your flooring project, usually within a business day. Call 720-429-9394 to talk now."
+  canonicalPath="/thanks/"
+  noindex
+>
+  <section class="section section--white">
+    <div class="container thanks">
+      <p class="eyebrow">Got It</p>
+      <h1>Thanks. Andrew will be in touch.</h1>
+      <p class="lead">
+        Your message is on its way. Andrew usually gets back within a business day. If it is quicker
+        to talk, call or text <a href={site.phoneHref}>{site.phoneDisplay}</a>.
+      </p>
+      <div class="button-row">
+        <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+        <a class="button-secondary" href={withBase('/portfolio/')}>See recent jobs</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .thanks {
+    max-width: 720px;
+    min-height: 40vh;
+  }
+</style>
